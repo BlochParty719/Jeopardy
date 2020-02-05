@@ -13,7 +13,7 @@ class App extends React.Component {
     }
     this.increasePoints = this.increasePoints.bind(this)
     this.decreasePoints = this.decreasePoints.bind(this)
-    this.resetPoints = this.resetPoints.bind(this)
+    this.toggleAnswer = this.toggleAnswer.bind(this)
     this.revealQuestion = this.revealQuestion.bind(this)
   }
   revealQuestion(){
@@ -21,7 +21,9 @@ class App extends React.Component {
     .then(response => {
       return response.json()
     }).then(json => this.setState({
-      Question: json.Question
+      Question: json[0].question,
+      Answer: json[0].answer,
+      Category: json[0].category
     }),
     error => console.log(error)
   )
@@ -29,20 +31,24 @@ class App extends React.Component {
 
 increasePoints(){
   this.setState({
-    score: this.state.score +1
+    score: this.state.score + this.state.points
   })
 }
 
 decreasePoints(){
   this.setState({
-    score: this.state.score -1
+    score: this.state.score - this.state.points
   })
 }
 
-resetPoints(){
+toggleAnswer(){
   this.setState({
-    score: 0
+
   })
+}
+
+revealQuestion(){
+  this.setState
 }
 
 render () {
@@ -65,7 +71,10 @@ render () {
       <h2>Category: {this.state.category}</h2>
       <h2>Points: {this.state.points}</h2>
       <h2>Answer: {this.state.answer}</h2>
-      <button onclick={this.revealQuestion}>Click to Reveal Question</button>
+      <button onclick={this.toggleAnswer}>Click to Reveal Question</button>
+      {(this.state.answer)
+      ? <toggleAnswer answer={this.state.answer}/>
+    }
     </div>
     </body>
     </>
